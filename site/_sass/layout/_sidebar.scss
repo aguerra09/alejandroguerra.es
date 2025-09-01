@@ -93,11 +93,11 @@
     height: auto;
   }
 
-  img {
+.author__avatar > img {
     max-width: 175px;
     border-radius: 50%;
 
-    @include breakpoint($large) {
+    @media (min-width: $large) {
       padding: 5px;
       border: 1px solid var(--global-border-color);
     }
