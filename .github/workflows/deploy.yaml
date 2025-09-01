@@ -1,0 +1,52 @@
+name: Deployment alejandroguerra.es Docker Image
+on:
+  push:
+    branches:
+      - feature/*
+jobs:
+ Build:
+     runs-on: ubuntu-latest
+     environment: ${{ github.ref == 'refs/heads/main' && 'pro' || github.ref == 'refs/heads/develop' && 'dev'}}
+     permissions:
+       contents: read
+       id-token: write
+ 
+     steps:
+     - uses: actions/checkout@v3
+     ## GCP Authentication
+     - id: auth
+       uses: google-github-actions/auth@v1
+       with:
+         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_ID }}
+         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_CORP}}
+ 
+     - name: 'setup gcloud'
+       uses: google-github-actions/setup-gcloud@v1
+ 
+     - name: 'run gcloud and set env'
+       run: |
+         gcloud auth print-access-token
+         echo "GCP_PROJECT_ID_CORP=$(gcloud config get-value project --project vars.GCP_PROJECT_ID)" >> $GITHUB_ENV
+         echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+ 
+     - name: 'Auth docker'
+       run: |
+         gcloud auth configure-docker ${{ vars.ARTIFACT_REGION}}
+       working-directory: "${{ vars.DOCKERFILE_PATH }}"
+ 
+     - name: 'Docker Build'
+       run: |
+         docker build -t "${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:${{ env.SHORT_SHA }}" \
+         -t "${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:latest" .
+       working-directory: "${{ vars.DOCKERFILE_PATH }}"
+ 
+     - name: 'Docker push'
+       run: |-
+         docker push "${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:${{ env.SHORT_SHA }}"
+         docker push "${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:latest"
+       working-directory: "${{ vars.DOCKERFILE_PATH }}"
+
+     - name: 'Update CR Job'
+       run: |-
+        gcloud run jobs update ${{ vars.CLOUD_RUN_NAME }} --image="${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:latest" --region=${{ vars.REGION }} --project=${{ vars.GCP_PROJECT_ID}}
+       working-directory: "${{ vars.DOCKERFILE_PATH }}"

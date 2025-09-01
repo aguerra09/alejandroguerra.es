@@ -1,0 +1,2 @@
+baseurl: ""
+url: "https://alejandroguerra.es"  # para probar con `docker run`; en prod cámbialo a tu dominio o URL de Cloud Run

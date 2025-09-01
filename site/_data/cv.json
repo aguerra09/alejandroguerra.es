@@ -1,0 +1,56 @@
+{
+  "basics": {
+    "name": "Alejandro Guerra",
+    "email": "contact@alejandroguerra.es",
+    "phone": "",
+    "website": "https://alejandroguerra.es",
+    "summary": "Currently employed at Keepler.io. Researching new Neural Networks architectures.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Madrid",
+      "countryCode": "ES",
+      "region": ""
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "aguerra09",
+        "url": "https://github.com/aguerra09"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "alejandroguerradiego",
+        "url": "https://www.linkedin.com/in/alejandroguerradiego/"
+      }
+    ]
+  },
+  "work": [],
+  "education": [
+    {
+      "institution": "University de Valladolid",
+      "area": "M. S. Industrial Engineering",
+      "studyType": "",
+      "startDate": "",
+      "endDate": "",
+      "gpa": null,
+      "courses": []
+    },
+    {
+      "institution": "University de Valladolid",
+      "area": "B.S. Electronic and industrial automation",
+      "studyType": "",
+      "startDate": "",
+      "endDate": "",
+      "gpa": null,
+      "courses": []
+    }
+  ],
+  "skills": [],
+  "languages": [],
+  "interests": [],
+  "references": [],
+  "publications": [],
+  "teaching": [],
+  "portfolio": []
+}

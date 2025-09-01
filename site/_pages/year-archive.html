@@ -1,0 +1,28 @@
+---
+layout: archive
+permalink: /year-archive/
+title: "Blog posts"
+author_profile: true
+---
+
+{% include base_path %}
+
+{% assign current_year = "" %}
+
+{% for post in site.posts %}
+  {% capture year %}{{ post.date | date: "%Y" }}{% endcapture %}
+
+  {% if year != current_year %}
+  {% if current_year != "" %}</ul>{% endif %}
+  <h2 id="{{ year | slugify }}" class="archive__subtitle" xmlns="http://www.w3.org/1999/html">{{ year }}</h2>
+  <ul class="year-list">
+  {% assign current_year = year %}
+  {% endif %}
+
+  <li>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a><br>
+    <small class="page__date"><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published: {{ post.date | date: "%B %d, %Y" }}</small>
+  </li>
+{% endfor %}
+
+{% if current_year != "" %}</ul>{% endif %}
