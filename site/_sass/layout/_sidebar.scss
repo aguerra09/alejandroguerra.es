@@ -21,7 +21,7 @@
     height: 100vh;
     overflow-y: auto;               // Add scrollbar if the sidebar is too long
     position: fixed;
-    padding-top: 1em;
+    padding-top: $masthead-height;
   }
 
   @include breakpoint($large) {
@@ -83,9 +83,9 @@
 .author__avatar {
   display: table-cell;
   vertical-align: top;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-}
+  width: 36px;
+  // set width only, for non-square avatars
+  // height: 36px;
 
   @include breakpoint($large) {
     display: block;
@@ -93,21 +93,22 @@
     height: auto;
   }
 
-.author__avatar > img {
+  img {
     max-width: 175px;
     border-radius: 50%;
 
-    @media (min-width: $large) {
+    @include breakpoint($large) {
       padding: 5px;
       border: 1px solid var(--global-border-color);
     }
+  }
 }
 
 .author__content {
   display: table-cell;
   vertical-align: top;
-  padding-left: 2em;
-  padding-right: 1em;
+  padding-left: 15px;
+  padding-right: 25px;
   line-height: 1;
 
   @include breakpoint($large) {
@@ -121,8 +122,11 @@
 .author__name {
   margin: 0;
 
+  @include breakpoint($large) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
-
 .sidebar .author__name {
   font-family: $sans-serif;
   font-size: $type-size-5;
