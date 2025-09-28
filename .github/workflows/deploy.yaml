@@ -48,5 +48,5 @@ jobs:
 
      - name: 'Update CR Job'
        run: |-
-        gcloud run jobs update ${{ vars.CLOUD_RUN_NAME }} --image="${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:latest" --region=${{ vars.REGION }} --project=${{ vars.GCP_PROJECT_ID}}
+         run services update ${{ vars.CLOUD_RUN_NAME }} --image="${{ vars.ARTIFACT_REGION}}/${{ vars.GCP_PROJECT_ID}}/${{ vars.ARTIFACT_REPOSITORY}}/${{ vars.IMAGE_NAME}}:latest" --region=${{ vars.REGION }} --project=${{ vars.GCP_PROJECT_ID}}
        working-directory: "${{ vars.DOCKERFILE_PATH }}"
