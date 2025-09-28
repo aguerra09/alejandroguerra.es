@@ -2,7 +2,7 @@ name: Deployment alejandroguerra.es Docker Image
 on:
   push:
     branches:
-      - feature/*
+      - develop
 jobs:
  Build:
      runs-on: ubuntu-latest
