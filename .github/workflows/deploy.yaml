@@ -19,14 +19,17 @@ jobs:
        with:
          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_ID }}
          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_CORP}}
- 
-     - name: 'setup gcloud'
+
+     - name: Setup gcloud
        uses: google-github-actions/setup-gcloud@v1
+       with:
+         project_id: ${{ vars.GCP_PROJECT_ID }}
+
  
      - name: 'run gcloud and set env'
        run: |
          gcloud auth print-access-token
-         echo "GCP_PROJECT_ID_CORP=$(gcloud config get-value project --project vars.GCP_PROJECT_ID)" >> $GITHUB_ENV
+         echo "GCP_PROJECT_ID_CORP=${{ vars.GCP_PROJECT_ID }}" >> $GITHUB_ENV
          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
  
      - name: 'Auth docker'
