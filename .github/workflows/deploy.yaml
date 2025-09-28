@@ -6,7 +6,7 @@ on:
 jobs:
  Build:
      runs-on: ubuntu-latest
-     environment: ${{ github.ref == 'refs/heads/main' && 'pro' || github.ref == 'refs/heads/develop' && 'dev'}}
+     environment: ${{ github.ref == 'refs/heads/develop' && 'pro' || github.ref == 'refs/heads/develop' && 'dev'}}
      permissions:
        contents: read
        id-token: write
